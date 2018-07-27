@@ -1,0 +1,41 @@
+{
+	"name": "telegram_slot",
+	"version": "1.0.0",
+	"description": "Telegram Slot game",
+	"main": "index.js",
+	"keywords": [
+		"telegram",
+		"slot",
+		"game"
+	],
+	"author": "Maxim Shmakov <mvshmakov@mail.ru>",
+	"license": "Apache-2.0",
+	"scripts": {
+		"start": "node index.js",
+		"lint": "eslint *.js scripts/*.js",
+		"lint:fix": "eslint *.js scripts/*.js --fix"
+	},
+	"engines": {
+		"node": "8.9.x",
+		"npm": "5.6.x"
+	},
+	"dependencies": {
+		"dotenv": "^5.0.1",
+		"express": "^4.16.2",
+		"fs": "0.0.1-security",
+		"telegraf": "^3.19.0",
+		"telegraf-i18n": "^6.1.1"
+	},
+	"devDependencies": {
+		"eslint": "^4.18.2",
+		"eslint-config-airbnb-base": "^12.1.0",
+		"eslint-plugin-import": "^2.9.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://mvshmakov@bitbucket.org/TelegramSlot/telegram_slot.git"
+	},
+	"bugs": {
+		"url": "https://github.com/mvshmakov/hse-military-bot/issues"
+	}
+}
