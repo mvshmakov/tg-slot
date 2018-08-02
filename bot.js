@@ -26,28 +26,31 @@ const stage = new Stage();
 // const botan = require('botanio')(config.metrika_token); //for metrika
 
 const menuButtons = {
-	game: 'Игра',
+	game: 'Игры',
 	account: 'Аккаунт'
 };
 
 const accountButtons = {
 	getBalance: 'Текущий баланс',
-	topUpBalance: 'Пополнить баланс',
+	topUpBalance: 'Пополнить баланс'
 }
 
 const controlButtons = {
 	back: 'Назад',
-	menu: 'В меню',
+	menu: 'В меню'
 };
 
-const gameShortName = 'explode'
+const gameShortNames = {
+	explode: "explode",
+	explode0: "explode0"
+};
 
 const gameMarkup = Extra.markup(
 	Markup.inlineKeyboard([
 		Markup.gameButton('🎮 Play now!'),
 		Markup.urlButton('Website', `${config.host}:${config.port}`)
 	])
-)
+);
 
 /* Menu scene */
 
@@ -57,12 +60,25 @@ menuScene.enter(ctx => {
 		.keyboard(Object.keys(menuButtons).map(key => [menuButtons[key]]))));
 });
 menuScene.hears(menuButtons.account, enter('account'));
-menuScene.hears(menuButtons.game, ctx => ctx.replyWithGame(gameShortName, gameMarkup));
-menuScene.gameQuery(ctx => {
+menuScene.hears(menuButtons.game, enter('chooseGame'));
+// menuScene.gameQuery(ctx => {
+// 	let gameName = ctx.callbackQuery.game_short_name;
+// 	return ctx.answerGameQuery(`${config.host}:${config.port}/games/${gameName}/main.html`)
+// });
+stage.register(menuScene);
+
+/* Menu scene */
+
+const chooseGameScene = new Scene('chooseGame');
+chooseGameScene.enter(ctx => ctx.reply('Выберите игру', Extra.markup(markup => markup.resize()
+	.keyboard(Object.keys(gameShortNames).map(key => [gameShortNames[key]])))));
+chooseGameScene.hears(controlButtons.menu, enter('menu'));
+Object.keys(gameShortNames).forEach(gn => chooseGameScene.hears(gameShortNames[gn], ctx => ctx.replyWithGame(gn, gameMarkup)));
+chooseGameScene.gameQuery(ctx => {
 	let gameName = ctx.callbackQuery.game_short_name;
 	return ctx.answerGameQuery(`${config.host}:${config.port}/games/${gameName}/main.html`)
 });
-stage.register(menuScene);
+stage.register(chooseGameScene);
 
 /* Account scene */
 
@@ -72,7 +88,7 @@ accountScene.enter(ctx => {
 	return ctx.reply('Выберите нужный пункт меню', Extra.markup(markup => markup.resize()
 		.keyboard(Object.keys(accountButtons).map(key => [accountButtons[key]]))));
 });
-accountScene.hears(controlButtons.menu, enter('menu'))
+accountScene.hears(controlButtons.menu, enter('menu'));
 stage.register(accountScene);
 
 /* Main listeners */
@@ -83,7 +99,7 @@ bot.use(stage.middleware());
 bot.command('start', ctx => ctx.scene.enter('menu'));
 bot.command('menu', ctx => ctx.scene.enter('menu'));
 bot.command('help', ctx => ctx.reply('Навигация в боте производится с помощью меню.'));
-bot.hears(menuButtons.game, ctx => ctx.replyWithGame(gameShortName, gameMarkup));
+bot.hears(menuButtons.game, enter('chooseGame'));
 bot.gameQuery(ctx => {
 	let gameName = ctx.callbackQuery.game_short_name;
 	return ctx.answerGameQuery(`${config.host}:${config.port}/games/${gameName}/main.html`)

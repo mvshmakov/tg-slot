@@ -1,6 +1,7 @@
-const express = require('express');
 // const favicon = require('express-favicon');
 const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 

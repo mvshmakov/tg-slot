@@ -3,7 +3,7 @@
 #### который необходимо вставить в `.env` вместо моего (`TOKEN={your-token}`)
 #### 1) `cd {path-to-index.js}`
 #### 2) `npm i`
-#### 3) `node .`
+#### 3) `npm run dev-server`
 #### 4) Открыть `localhost:3000` в браузере
 
 ## Pull Requests (PR):
