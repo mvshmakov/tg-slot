@@ -1,2 +1,2 @@
+start - Start bot
 help - Get help
-game - Send the game message

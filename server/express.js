@@ -1,12 +1,12 @@
-// const favicon = require('express-favicon');
 const path = require('path');
 const express = require('express');
-const bodyParser = require('body-parser');
+// const favicon = require('express-favicon');
+// const bodyParser = require('body-parser');
 
 const app = express();
 
 module.exports = (bot) => {
-	if (process.env.NODE_ENV == 'development') {
+	if (process.env.NODE_ENV === 'development') {
 		bot.telegram.deleteWebhook();
 		bot.startPolling();
 	} else {
@@ -14,12 +14,12 @@ module.exports = (bot) => {
 		app.use(bot.webhookCallback(`/bot${process.env.TOKEN}`));
 	}
 
-	app.use(express.static(path.join(__dirname, 'static')));
+	app.use(express.static(path.join(__dirname, '..', 'client', 'src')));
 
 	// app.use(favicon('favicon.ico'));
 
 	app.get('/', (req, res) => {
-		res.sendFile(path.join(__dirname, 'static', 'website', 'main.html'))
+		res.sendFile(path.join(__dirname, '..', 'client', 'src', 'website', 'main.html'));
 	});
 
 	app.listen(process.env.PORT, () => {
