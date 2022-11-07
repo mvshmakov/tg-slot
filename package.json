@@ -39,7 +39,7 @@
 		"eslint": "^4.18.2",
 		"eslint-config-airbnb-base": "^12.1.0",
 		"eslint-plugin-import": "^2.9.0",
-		"gulp": "~3.9.1",
+		"gulp": "~4.0.2",
 		"gulp-autoprefixer": "~2.3.1",
 		"gulp-babel": "^6.1.2",
 		"gulp-less": "~3.1.0",
